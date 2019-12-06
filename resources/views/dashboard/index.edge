@@ -1,0 +1,114 @@
+@layout('layouts/app')
+@section('content')
+  <section class="content">
+      <div class="nav-tabs-custom">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#in_production" data-toggle="tab" aria-expanded="true">Em Produção <span data-toggle="tooltip" class="badge bg-blue" >3</span></a></li>
+            <li class=""><a href="#left_for_delivery" data-toggle="tab" aria-expanded="false">Saiu para entrega <span data-toggle="tooltip" class="badge bg-yellow" >3</span></a></li>
+            <li class=""><a href="#delivered" data-toggle="tab" aria-expanded="false">Entregues <span data-toggle="tooltip" class="badge bg-green" >3</span></a></li>
+            <li class=""><a href="#canceled" data-toggle="tab" aria-expanded="false">Cancelados <span data-toggle="tooltip" class="badge bg-red" >3</span></a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="activity">
+                <div id="table_content">
+                    <table id="table_production" class="table table-bordered table-hover dataTable">
+                        <thead class="thead-dark">
+                          <tr>
+                            <th scope="col"># Número do pedido</th>
+                            <th scope="col" style="text-transform: uppercase; font-weight: 700">Cliente</th>
+                            <th scope="col" style="text-transform: uppercase; font-weight: 700">Valor</th>
+                            <th scope="col" style="text-transform: uppercase; font-weight: 700">Hora do pedido</th>
+                            <th scope="col" style=" text-transform: uppercase; font-weight: 700">Ações</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {{--  @if(orders)  --}}
+                            {{--  @each( order in orders )  --}}
+                                {{--  <tr>  --}}
+                                    {{--  <th scope="row">{{ order->id }}</th>  --}}
+                                    {{--  <td >{{ order->name }}</td>  --}}
+                                    {{--  <td >{{ order->views }}</td>  --}}
+                                    {{--  <td style=" ">{{ date('d/m/Y', strtotime(order->expiration)) }}</td>  --}}
+                                    {{--  <td style="text-align: center;">  --}}
+                                        {{--  <a class="btn btn-primary" href="{{ route('ad.edit', 'id' => order->id]) }}" ><i class="fa fa-edit"></i></a>  --}}
+                                        {{--  <a class="btn btn-danger"  href="#delete" onclick="deleteElement({{order->id}}, '{{order->name}}')"><i class="fa fa-trash"></i></a>  --}}
+                                    {{--  </td>  --}}
+                                {{--  </tr>  --}}
+                            {{--  @endeach  --}}
+                            {{--  @endif  --}}
+
+                            <tr>
+                                <th scope="row">0</th>
+                                <td> Ian</td>
+                                <td> R$ 50,00</td>
+                                <td>18:54 12/12</td>
+                                <td>
+                                    <a class="btn btn-primary"  ><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-danger"  href="#delete" ><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a class="btn btn-primary" href="{{ route('ad.create') }}" > Fazer pedido</a>
+                </div>
+            </div>
+            <!-- /.tab-pane -->
+            <div class="tab-pane" id="left_for_delivery">
+            
+            </div>
+            <!-- /.tab-pane -->
+
+            <div class="tab-pane" id="delivered">
+             
+            </div>
+
+
+            <div class="tab-pane" id="canceled">
+             
+            </div>
+            <!-- /.tab-pane -->
+          </div>
+          <!-- /.tab-content -->
+        </div>
+
+  </section>
+
+  <script>
+    var table = $('#table_production').DataTable({
+            'paging'      : true,
+            'lengthChange': false,
+            "columns": [
+                { "width": "20%" },
+                null,
+                { "width": "5%" },
+                { "width": "15%" },
+                { "width": "15%" },
+                        ],
+            'searching'   : true,
+            'ordering'    : true,
+            'info'        : true,
+            'autoWidth'   : false,
+            "oLanguage": {
+                "oPaginate": 
+                {
+                    "sFirst": "&lt&lt",
+                    "sLast": "&gt&gt",
+                    "sNext": "&gt",
+                    "sPrevious": "&lt"
+                },
+                "sEmptyTable": "Nenhum registro encontrado",
+                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sInfoThousands": ".",
+                "sLengthMenu": "_MENU_ Resultados por página",
+                "sLoadingRecords": "Carregando...",
+                "sProcessing": "Processando...",
+                "sZeroRecords": "Nenhum registro encontrado",
+                "sSearch": "Pesquisar ",
+                
+            }
+        });
+    </script>
+@endsection

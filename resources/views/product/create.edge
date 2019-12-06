@@ -1,0 +1,72 @@
+@layout('layouts/app')
+
+@section('content')
+
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box box-primary">
+        <div class="box-header">
+        </div>
+        <div class="box-body">
+          <div class="row">
+            <div class="col-xs-6 col-sm-12">
+              <div class="form-group">
+                <label>Nome</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa  fa-envelope"></i>
+                  </div>
+                  <input type="text" class="form-control" name="name" >
+                </div>
+                <!-- /.input group -->
+              </div>
+              <div class="form-group">
+                <label>Full Name</label>
+
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa  fa-info"></i>
+                  </div>
+                  <input type="text" name="lastName" class="form-control" >
+                </div>
+                <!-- /.input group -->
+              </div>
+            </div>
+            <div class="col-xs-6 col-sm-12">
+              <div class="form-group">
+                <label>Grupos</label>
+                <select name="group_id" class="form-control select2" style="width: 100%;">
+                  @each( group in groups )
+                    <option value="{{group.id}}">{{group.name}}</option>
+                  @endeach
+                </select>
+              </div>
+            </div>
+            
+
+            </div>
+          </div>
+        </div>
+        <div class="box-footer">
+          <!-- tools box -->
+          <div class="pull-left box-tools">
+
+            <button type="submit" class="btn btn-block btn-success btn-flat">Save</button>
+
+          </div>
+          <!-- /. tools -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  $(function () {
+    // $.userManage.getPhoneCode();
+       //Initialize Select2 Elements
+       $('.select2').select2()
+  });
+
+</script>
+@endsection
