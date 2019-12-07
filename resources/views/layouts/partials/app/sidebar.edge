@@ -33,7 +33,7 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i>Categories</a></li>
+          <li><a href="{{route('groups.index')}}"><i class="fa fa-circle-o"></i>Categories</a></li>
           <li><a href="{{route('products.index')}}"><i class="fa fa-circle-o"></i> Produtos</a></li>
         </ul>
       </li>
@@ -41,21 +41,19 @@
       <li class="treeview">
         <a href="">
           <i class="fa fa-users"></i>
-          <span>Users</span>
+          <span>Pessoas</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="{{ route('userManage') }}"><i class="fa fa-circle-o"></i>Manage User</a></li>
-          <li><a href="{{route('userAdd')}}"><i class="fa fa-circle-o"></i> Add User</a></li>
-          <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i>Users In Organization</a></li>
+          <li><a href="{{ route('clients.index') }}"><i class="fa fa-circle-o"></i>Clientes</a></li>
+          <li><a href="{{ route('motoboys.index')}}"><i class="fa fa-circle-o"></i> Motoboys</a></li>
         </ul>
       </li>
       <li>
-        <a href="pages/widgets.html">
-          <i class="fa fa-cogs"></i> <span>System Configuration</span>
-
+      <a href="{{route('order.index')}}">
+          <i class="fa fa-shopping-cart"></i> <span>Pedidos</span>
         </a>
       </li>
 

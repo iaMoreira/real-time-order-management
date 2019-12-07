@@ -17,6 +17,7 @@
 const Route = use('Route')
 
 Route.get('/', 'DashboardController.index').as('dashboard')
+Route.resource('orders', 'OrderController')
 Route.resource('products', 'ProductController')
 Route.resource('groups', 'GroupController')
 Route.resource('clients', 'ClientController')

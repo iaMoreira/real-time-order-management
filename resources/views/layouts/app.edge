@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <meta charset="utf-8" />
   <title>Adonis AdminLTE</title>
 
@@ -11,29 +12,33 @@
   {{style('https://cdn.datatables.net/responsive/2.1.0/css/responsive.bootstrap.min.css')}}
   {{style('https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css')}}
 
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  {{--  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">  --}}
 
   {{ script('main') }}
   {{script('https://adminlte.io/themes/AdminLTE/bower_components/jquery/dist/jquery.min.js')}}
-  {{script('https://adminlte.io/themes/AdminLTE/bower_components/jquery/dist/jquery.min.js')}}
   {{script('https://adminlte.io/themes/AdminLTE/bower_components/datatables.net/js/jquery.dataTables.min.js')}}
+  {{ script('https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js') }}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js" charset="utf-8"></script>
+ 
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
-  @include('partials/app/flash')
+  @include('layouts/partials/app/flash')
 
   <div class="wrapper">
 
     <!-- Navbar -->
-    @include('partials/app/header')
+    @include('layouts/partials/app/header')
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    @include('partials/app/sidebar')
+    @include('layouts/partials/app/sidebar')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
-      @include('partials/app/breadcrumb')
+      @include('layouts/partials/app/breadcrumb')
       <!-- /.content-header -->
 
       <!-- Main content -->
@@ -43,7 +48,7 @@
     <!-- /.content-wrapper -->
 
     <!--footer -->
-    @include('partials/app/footer')
+    @include('layouts/partials/app/footer')
 
 
     <!-- Control Sidebar -->
@@ -247,6 +252,7 @@
 
   <script>
     // $.widget.bridge('uibutton', $.ui.button)
+    
 
   </script>
 </body>

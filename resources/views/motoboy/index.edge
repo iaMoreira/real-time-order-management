@@ -7,35 +7,33 @@
       <div class="box">
         <div class="box-header ui-sortable-handle" style="">
 
-          <h3 class="box-title">Produtos </h3>
+          <h3 class="box-title">Motoboys </h3>
           <!-- tools box -->
           
           <!-- /. tools -->
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <table id="tableProducts" class="table table-bordered table-hover dataTable dt-responsive">
+          <table id="tablemotoboys" class="table table-bordered table-hover dataTable dt-responsive">
             <thead>
               <tr>
                 <th> #</th>
                 <th>Nome</th>
-                <th>Descrição</th>
-                <th>Preço</th>
-                <th>Grupo</th>
+                <th>Telefone</th>
+                <th>Placa</th>
                 <th with="120px" class="text-center"> Action</th>
               </tr>
             </thead>
             <tbody>
-              @if(products)
-              @each( product in products )
+              @if(motoboys)
+              @each( motoboy in motoboys )
               <tr>
-                <td>{{product.id}}</td>
-                <td>{{product.name}}</td>
-                <td>{{product.description}}</td>
-                <td>{{product.price}}</td>
-                <td>{{product.group.name}}</td>
+                <td>{{motoboy.id}}</td>
+                <td>{{motoboy.name}}</td>
+                <td>{{motoboy.phone}}</td>
+                <td>{{motoboy.placa}}</td>
                 <td class="text-center">
-                  <a href="{{route('products.edit', { id: product.id })}}" class="btn btn-info btn-flat"><i
+                  <a href="{{route('motoboys.edit', { id: motoboy.id })}}" class="btn btn-info btn-flat"><i
                       class="fa  fa-pencil"></i></a>
                   <a class="btn btn-danger btn-flat"><i class="fa  fa-remove"></i></a>
                 </td>
@@ -46,8 +44,8 @@
 
           </table>
           <div class="pull-left box-tools">
-              <a href="{{route('products.create')}}" class="btn btn-block btn-success">
-                Cadastrar produto</a>
+              <a href="{{route('motoboys.create')}}" class="btn btn-block btn-success">
+                Cadastrar motoboye</a>
             </div>
         </div>
         <!-- /.box-body -->
@@ -59,12 +57,11 @@
 </section>
 
 <script>
-    var table = $('#tableProducts').DataTable({
+    var table = $('#tablemotoboys').DataTable({
             'paging'      : true,
             'lengthChange': false,
             "columns": [
               { "width": "5%" },
-              { "width": "20%" },
                 null,
                 { "width": "15%" },
                 { "width": "15%" },
