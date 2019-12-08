@@ -7,8 +7,8 @@ class OrdersSchema extends Schema {
   up () {
     this.create('orders', (table) => {
       table.increments()
-      table.string('status')
-      table.integer('client_id').unsigned().references('id').inTable('clients')
+      table.string('status').notNullable()
+      table.integer('client_id').notNullable().unsigned().references('id').inTable('clients')
       table.integer('motoboy_id').unsigned().nullable().references('id').inTable('motoboys')
       table.text('observation').nullable()
       table.timestamp('canceled_at').nullable()

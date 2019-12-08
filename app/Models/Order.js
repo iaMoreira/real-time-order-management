@@ -17,14 +17,19 @@ class Order extends Model {
     return this.hasOne("App/Models/Payment");
   }
 
+  items() {
+    return this.hasMany("App/Models/Item");
+  }
+
   products() {
-    return this.manyThrough("App/Models/Producs", "items");
+    return this.manyThrough("App/Models/Product", "items");
   }
 
   static async getAll() {
     let orders = {};
     orders["production"] = await this.query()
       .with("client")
+      .with("items.product")
       .innerJoin('items', 'orders.id', 'items.order_id')
       .innerJoin('products', 'products.id', 'items.product_id')
       .where("orders.status", "production")

@@ -5,6 +5,7 @@ class OrderController {
   constructor ({ socket, request }) {
     this.socket = socket
     this.request = request
+    console.log(socket.id)
     this.onListOrders()
   }
   

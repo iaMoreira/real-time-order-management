@@ -1,0 +1,31 @@
+@layout('layouts/app')
+@section('content')
+  <section class="content ">
+      <div class="row" id="list_production_items" >
+        <div class="col-sm-4 col-md-4 col-lg-3 col-xl-2">
+          <div class="box box-primary">
+            <div class="box-header" >
+              <h4 class="">   <b>Nº 2</b> - Nome do cliente</h4> 
+              <h6 class="text-right"> 07/12/2019 11:46:51</h6>
+            </div>
+            <div class="box-body box-comments">
+              <ul class="nav nav-stacked">
+                <li><a href="#">Pizza <span class="pull-right badge bg-blue">2</span></a></li>
+                <li><a href="#">Refrigerante <span class="pull-right badge bg-blue">1</span></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>  
+      </div>
+  </section>
+@endsection
+
+@section('js')
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="https://unpkg.com/adonis-websocket-client@1.0.2/dist/ws.js" charset="utf-8"></script>
+  {{ script('https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js') }}
+  {{ script('https://unpkg.com/@adonisjs/websocket-client@1.0.9/dist/Ws.browser.js') }}
+  {{ script('js/socketOrder.js') }}
+
+@endsection

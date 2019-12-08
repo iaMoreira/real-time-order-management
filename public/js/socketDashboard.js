@@ -48,11 +48,11 @@ function subscribeToChannel () {
       tableProduction.row.add( [
         order.id,
         order.client.name,
-        order.total,
-        new Date(order.created_at).toLocaleString('pt-br'),
+        'R$ ' + order.total.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+        moment(new Date(order.created_at)).format('HH:mm:ss DD-MM-YYYY'),
         `<div style="text-align: center;"> 
             <a class="btn btn-primary" onclick="editProduction(${order.id}, '${order.client.name}')"><i class="fa fa-edit"></i></a>
-            <a class="btn btn-danger" onclick="editCanceled(${order.id})" ><i class="fa fa-trash"></i></a>
+            <a class="btn btn-danger" onclick="editCanceled(${order.id})" ><i class="fa fa-remove"></i></a>
         </div>`
       ] ).draw( false );
     }
@@ -60,12 +60,12 @@ function subscribeToChannel () {
       tableDelivery.row.add( [
         order.id,
         order.client.name,
-        order.total,
+        'R$ ' + order.total.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2}),
         order.motoboy.name,
-        new Date(order.created_at).toLocaleString('pt-br'),
+        moment(new Date(order.created_at)).format('HH:mm:ss DD-MM-YYYY'),
         `<div style="text-align: center;"> 
             <a class="btn btn-primary" onclick="editDelivery(${order.id}, '${order.motoboy.name}')"><i class="fa fa-edit"></i></a>
-            <a class="btn btn-danger" onclick="editCanceled(${order.id})" ><i class="fa fa-trash"></i></a>
+            <a class="btn btn-danger" onclick="editCanceled(${order.id})" ><i class="fa fa-remove"></i></a>
         </div>`
       ] ).draw( false );
     }
@@ -73,11 +73,11 @@ function subscribeToChannel () {
       tableDelivered.row.add( [
         order.id,
         order.client.name,
-        "order.price",
+        'R$ ' + order.total.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2}),
         order.motoboy.name,
-        new Date(order.created_at).toLocaleString('pt-br'),
+        moment(new Date(order.created_at)).format('HH:mm:ss DD-MM-YYYY'),
         `<div style="text-align: center;"> 
-            <a class="btn btn-danger" onclick="editCanceled(${order.id})" ><i class="fa fa-trash"></i></a>
+            <a class="btn btn-danger" onclick="editCanceled(${order.id})" ><i class="fa fa-remove"></i></a>
         </div>`
       ] ).draw( false );
     }
@@ -85,12 +85,9 @@ function subscribeToChannel () {
       tableCanceled.row.add( [
         order.id,
         order.client.name,
-        "order.price",
+        'R$ ' + order.total.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2}),
         (order.motoboy ? order.motoboy.name : "Sem motoboy" ),
-        new Date(order.created_at).toLocaleString('pt-br'),
-        `<div style="text-align: center;"> 
-            <a class="btn btn-danger" onclick="editCanceled(${order.id})" ><i class="fa fa-trash"></i></a>
-        </div>`
+        moment(new Date(order.created_at)).format('HH:mm:ss DD-MM-YYYY')
       ] ).draw( false );
     }
   });

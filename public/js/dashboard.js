@@ -115,7 +115,7 @@ $("#table_canceled").DataTable({
     null,
     { width: "15%" },
     { width: "15%" },
-    { width: "15%" },
+    { width: "15%", style: "text-align: center;" },
   ],
   searching: true,
   ordering: true,
@@ -159,12 +159,13 @@ function editDelivery(id, name) {
 function editCanceled(id) {
   order_id = id;
   Swal.fire({
-    title: "Atenção?",
-    text: "Você tem certeza que cancelar canelar o pedido: " + id,
+    title: "Atenção!",
+    text: "Você tem certeza que quer cancelar o pedido: " + id,
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
+    cancelmButtonText: "Não",
     confirmButtonText: "Sim, quero cancelar!"
   }).then(result => {
     if (result.value) {

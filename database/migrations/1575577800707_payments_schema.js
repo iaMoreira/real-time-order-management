@@ -7,11 +7,12 @@ class PaymentsSchema extends Schema {
   up () {
     this.create('payments', (table) => {
       table.increments()
-      table.integer('payment_type_id').unsigned().references('id').inTable('payment_types')
-      table.integer('order_id').unsigned().references('id').inTable('orders')
+      table.integer('payment_type_id').notNullable().unsigned().references('id').inTable('payment_types')
+      table.integer('order_id').notNullable().unsigned().references('id').inTable('orders')
       table.integer('cash_register_id').unsigned().references('id').inTable('cash_registers')
       table.float('value', 2)
       table.float('discount', 2)
+      table.string('status')
       table.timestamps()
     })
   }

@@ -7,7 +7,7 @@ class PaymentTypesSchema extends Schema {
   up () {
     this.create('payment_types', (table) => {
       table.increments()
-      table.string('type')
+      table.string('type').notNullable()
       table.timestamps()
     })
   }

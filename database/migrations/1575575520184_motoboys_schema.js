@@ -7,8 +7,8 @@ class MotoboysSchema extends Schema {
   up () {
     this.create('motoboys', (table) => {
       table.increments()
-      table.string('name')
-      table.string('phone')
+      table.string('name').notNullable()
+      table.string('phone').notNullable()
       table.string('placa').nullable()
       table.timestamps()
     })

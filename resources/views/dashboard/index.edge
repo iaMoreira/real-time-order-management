@@ -45,17 +45,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">0</th>
-                                <td> Ian</td>
-                                <td> R$ 50,00</td>
-                                <td>18:54 12/12</td>
-                                <td>Iago</td>
-                                <td>
-                                    <a class="btn btn-primary"  ><i class="fa fa-edit"></i></a>
-                                    <a class="btn btn-danger"  href="#delete" ><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
+                           
                         </tbody>
                     </table>
                     <a class="btn btn-primary" href="{{ route('orders.create') }}" > Fazer pedido</a>
@@ -77,17 +67,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">0</th>
-                                <td> Ian</td>
-                                <td> R$ 50,00</td>
-                                <td>18:54 12/12</td>
-                                <td>Iago</td>
-                                <td>
-                                    <a class="btn btn-primary"  ><i class="fa fa-edit"></i></a>
-                                    <a class="btn btn-danger"  href="#delete" ><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
+                            
                         </tbody>
                     </table>
                     <a class="btn btn-primary" href="{{ route('orders.create') }}" > Fazer pedido</a>
@@ -104,17 +84,10 @@
                             <th scope="col" style="">Cliente</th>
                             <th scope="col" style="">Valor</th>
                             <th scope="col" style="">Motoboy</th>
-                            <th scope="col" style="">Hora do pedido</th>
+                            <th scope="col" style="text-align: center;">Hora do pedido</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">0</th>
-                                <td> Ian</td>
-                                <td> R$ 50,00</td>
-                                <td>18:54 12/12</td>
-                                <td>Iago</td>
-                            </tr>
                         </tbody>
                     </table>
                     <a class="btn btn-primary" href="{{ route('orders.create') }}" > Fazer pedido</a>
@@ -126,17 +99,18 @@
         </div>
 
     </section>
-    <script>
-    const baseUrl = '{{route('dashboard')}}';
-    </script>
+
     @include('dashboard.modal.productionModal')
     @include('dashboard.modal.deliveryModal')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     
+@endsection
+
+@section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     {{ script('js/dashboard.js') }}
     <script src="https://unpkg.com/adonis-websocket-client@1.0.2/dist/ws.js" charset="utf-8"></script>
     {{ script('https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js') }}
     {{ script('https://unpkg.com/@adonisjs/websocket-client@1.0.9/dist/Ws.browser.js') }}
-    {{ script('js/order.js') }}
-
+    {{ script('js/socketDashboard.js') }}
 @endsection
