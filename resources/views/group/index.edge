@@ -1,19 +1,32 @@
 @layout('layouts/app')
+
+
 @section('content')
+<section class="content-header">
+    <h1>
+      Grupos
+    </h1>
+    <ol class="breadcrumb">
+      <li class="">
+        <a href="/">
+          <i class="fa fa-dashboard"></i>
+          Dashboard</a>
+      </li>
+      <li class="active">
+        <a href="javascript:void(0)">
+          Grupos</a>
+      </li>
+    </ol>  
+</section>
+
 <section class="content">
   <div class="row">
 
     <div class="col-xs-12">
-      <div class="box">
-        <div class="box-header ui-sortable-handle" style="">
+      <div class="box box-primary">
 
-          <h3 class="box-title">Grupos </h3>
-          <!-- tools box -->
-          
-          <!-- /. tools -->
-        </div>
         <!-- /.box-header -->
-        <div class="box-body">
+        <div class="box-body ">
           <div class="table-responsive">
             <table id="tablegGroups" class="table table-bordered table-hover dataTable dt-responsive">
               <thead>
@@ -25,17 +38,17 @@
               </thead>
               <tbody>
                 @if(groups)
-                @each( group in groups )
-                <tr>
-                  <td>{{group.id}}</td>
-                  <td>{{group.name}}</td>
-                  <td class="text-center">
-                    <a href="{{route('groups.edit', { id: group.id })}}" class="btn btn-primary btn-flat"><i
-                        class="fa  fa-pencil"></i></a>
-                    <a class="btn btn-danger btn-flat" onclick="deleteElement({{group.id}}, '{{group.name}}', this)"><i class="fa  fa-trash"></i></a>
-                  </td>
-                </tr>
-                @endeach
+                  @each( group in groups )
+                    <tr>
+                      <td>{{group.id}}</td>
+                      <td>{{group.name}}</td>
+                      <td class="text-center">
+                        <a href="{{route('groups.edit', { id: group.id })}}" class="btn btn-primary btn-flat"><i
+                            class="fa  fa-pencil"></i></a>
+                        <a class="btn btn-danger btn-flat" onclick="deleteElement({{group.id}}, '{{group.name}}', this)"><i class="fa  fa-trash"></i></a>
+                      </td>
+                    </tr>
+                  @endeach
                 @endif
               </tbody>
   
@@ -54,6 +67,9 @@
 
 </section>
 
+@endsection
+
+@section('js')
 <script>
   var table = $('#tablegGroups').DataTable({
       'paging'      : true,
@@ -131,5 +147,5 @@
     });
   }
 
-</script>
+</script>  
 @endsection

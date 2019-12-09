@@ -1,24 +1,24 @@
-'use strict'
+"use strict";
 
 const Group = use("App/Models/Group");
 
 class GroupController {
-  async index({ route, request, response, session, view }) {
-    let groups = await Group.all()
+  async index({ view }) {
+    let groups = await Group.all();
     return view.render("group.index", {
       groups: groups.toJSON()
     });
   }
-  
+
   async create({ view }) {
     return view.render("group.create");
   }
 
   async store({ request, response }) {
-    const all = request.except('_csrf');
+    const all = request.except("_csrf");
     let group = await Group.create(all);
 
-    return response.redirect('/groups')
+    return response.redirect("/groups");
   }
 
   async edit({ view, params }) {
@@ -29,22 +29,22 @@ class GroupController {
   }
 
   async update({ request, response, params }) {
-    const {name} = request.except(['_csrf', '_method']);
+    const { name } = request.except(["_csrf", "_method"]);
     const group = await Group.findOrFail(params.id);
     group.name = name;
     const result = await group.save();
     if (result) {
     }
-    return response.route('groups.index')
+    return response.route("groups.index");
   }
 
-  async destroy({response, params}){
+  async destroy({ response, params }) {
     const group = await Group.findOrFail(params.id);
     const result = await group.delete();
     if (result) {
     }
-    return response.json(true)
+    return response.json(true);
   }
 }
 
-module.exports = GroupController
+module.exports = GroupController;

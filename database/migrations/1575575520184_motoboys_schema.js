@@ -8,8 +8,8 @@ class MotoboysSchema extends Schema {
     this.create('motoboys', (table) => {
       table.increments()
       table.string('name').notNullable()
-      table.string('phone').notNullable()
-      table.string('placa').nullable()
+      table.string('phone').notNullable().unique()
+      table.string('license_plate').nullable()
       table.timestamps()
     })
   }
