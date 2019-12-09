@@ -2,13 +2,17 @@ var motoboy_id;
 var order_id;
 $("#table_production").DataTable({
   paging: true,
-  lengthChange: false,
+  lengthChange: true,
   columns: [
     { width: "5%" },
     null,
     { width: "15%" },
     { width: "15%" },
     { width: "15%" }
+  ],
+  lengthMenu: [
+    [10, 25, 50, -1],
+    [10, 25, 50, "Tudo"]
   ],
   searching: true,
   ordering: true,
@@ -37,7 +41,7 @@ $("#table_production").DataTable({
 
 $("#table_delivery").DataTable({
   paging: true,
-  lengthChange: false,
+  lengthChange: true,
   columns: [
     { width: "5%" },
     null,
@@ -73,7 +77,7 @@ $("#table_delivery").DataTable({
 
 $("#table_delivered").DataTable({
   paging: true,
-  lengthChange: false,
+  lengthChange: true,
   columns: [
     { width: "5%" },
     null,
@@ -86,6 +90,7 @@ $("#table_delivered").DataTable({
   ordering: true,
   info: true,
   autoWidth: false,
+
   oLanguage: {
     oPaginate: {
       sFirst: "&lt&lt",
@@ -109,13 +114,13 @@ $("#table_delivered").DataTable({
 
 $("#table_canceled").DataTable({
   paging: true,
-  lengthChange: false,
+  lengthChange: true,
   columns: [
     { width: "5%" },
     null,
     { width: "15%" },
     { width: "15%" },
-    { width: "15%", style: "text-align: center;" },
+    { width: "15%", style: "text-align: center;" }
   ],
   searching: true,
   ordering: true,
@@ -169,7 +174,7 @@ function editCanceled(id) {
     confirmButtonText: "Sim, quero cancelar!"
   }).then(result => {
     if (result.value) {
-      submitCanceled()
+      submitCanceled();
     }
   });
 }
@@ -229,7 +234,7 @@ function submitCanceled() {
     url: "orders/" + order_id + "?_method=PATCH",
     data: JSON.stringify({
       _token: token,
-      status: "canceled",
+      status: "canceled"
     }),
     success: function(obj) {
       Swal.fire("Cancelado!", `O pedido ${order_id} foi cancelado`, "success");
@@ -237,30 +242,30 @@ function submitCanceled() {
   });
 }
 
-$('#production').click(() => {
-  $("#tab_production").addClass(['active', 'show'])
-  $("#tab_delivery").removeClass(['active', 'show'])
-  $("#tab_delivered").removeClass(['active', 'show'])
-  $("#tab_canceled").removeClass(['active', 'show'])
-})
+$("#production").click(() => {
+  $("#tab_production").addClass(["active", "show"]);
+  $("#tab_delivery").removeClass(["active", "show"]);
+  $("#tab_delivered").removeClass(["active", "show"]);
+  $("#tab_canceled").removeClass(["active", "show"]);
+});
 
-$('#delivery').click(() => {
-  $("#tab_production").removeClass(['active', 'show'])
-  $("#tab_delivery").addClass(['active', 'show'])
-  $("#tab_delivered").removeClass(['active', 'show'])
-  $("#tab_canceled").removeClass(['active', 'show'])
-})
+$("#delivery").click(() => {
+  $("#tab_production").removeClass(["active", "show"]);
+  $("#tab_delivery").addClass(["active", "show"]);
+  $("#tab_delivered").removeClass(["active", "show"]);
+  $("#tab_canceled").removeClass(["active", "show"]);
+});
 
-$('#delivered').click(() => {
-  $("#tab_production").removeClass(['active', 'show'])
-  $("#tab_delivery").removeClass(['active', 'show'])
-  $("#tab_delivered").addClass(['active', 'show'])
-  $("#tab_canceled").removeClass(['active', 'show'])
-})
+$("#delivered").click(() => {
+  $("#tab_production").removeClass(["active", "show"]);
+  $("#tab_delivery").removeClass(["active", "show"]);
+  $("#tab_delivered").addClass(["active", "show"]);
+  $("#tab_canceled").removeClass(["active", "show"]);
+});
 
-$('#canceled').click(() => {
-  $("#tab_production").removeClass(['active', 'show'])
-  $("#tab_delivery").removeClass(['active', 'show'])
-  $("#tab_delivered").removeClass(['active', 'show'])
-  $("#tab_canceled").addClass(['active', 'show'])
-})
+$("#canceled").click(() => {
+  $("#tab_production").removeClass(["active", "show"]);
+  $("#tab_delivery").removeClass(["active", "show"]);
+  $("#tab_delivered").removeClass(["active", "show"]);
+  $("#tab_canceled").addClass(["active", "show"]);
+});

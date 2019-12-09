@@ -14,37 +14,39 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <table id="tableProducts" class="table table-bordered table-hover dataTable dt-responsive">
-            <thead>
-              <tr>
-                <th> #</th>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Preço</th>
-                <th>Grupo</th>
-                <th with="120px" class="text-center"> Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              @if(products)
-              @each( product in products )
-              <tr>
-                <td>{{product.id}}</td>
-                <td>{{product.name}}</td>
-                <td>{{product.description ? product.description : 'Não há descrição'}}</td>
-                <td>{{'R$ ' + product.price.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}}</td>
-                <td>{{product.group.name}}</td>
-                <td class="text-center">
-                  <a href="{{route('products.edit', { id: product.id })}}" class="btn btn-primary btn-flat"><i
-                      class="fa  fa-pencil"></i></a>
-                  <a class="btn btn-danger btn-flat"><i class="fa  fa-remove"></i></a>
-                </td>
-              </tr>
-              @endeach
-              @endif
-            </tbody>
-
-          </table>
+          <div class="table-responsive">
+            <table id="tableProducts" class="table table-bordered table-hover dataTable dt-responsive">
+              <thead>
+                <tr>
+                  <th> #</th>
+                  <th>Nome</th>
+                  <th>Descrição</th>
+                  <th>Preço</th>
+                  <th>Grupo</th>
+                  <th with="120px" class="text-center"> Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                @if(products)
+                @each( product in products )
+                <tr>
+                  <td>{{product.id}}</td>
+                  <td>{{product.name}}</td>
+                  <td>{{product.description ? product.description : 'Não há descrição'}}</td>
+                  <td>{{'R$ ' + product.price.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}}</td>
+                  <td>{{product.group.name}}</td>
+                  <td class="text-center">
+                    <a href="{{route('products.edit',  {id: product.id})}}" class="btn btn-primary btn-flat"><i
+                        class="fa  fa-pencil"></i></a>
+                    <a class="btn btn-danger btn-flat" onclick="deleteElement({{product.id}}, '{{product.name}}', this)"><i class="fa  fa-trash"></i></a>
+                  </td>
+                </tr>
+                @endeach
+                @endif
+              </tbody>
+  
+            </table>
+          </div>
           <div class="pull-left box-tools">
               <a href="{{route('products.create')}}" class="btn btn-block btn-success">
                 Cadastrar produto</a>
@@ -59,42 +61,83 @@
 </section>
 
 <script>
+   
     var table = $('#tableProducts').DataTable({
-            'paging'      : true,
-            'lengthChange': false,
-            "columns": [
-              { "width": "5%" },
-              { "width": "20%" },
-                null,
-                { "width": "15%" },
-                { "width": "15%" },
-                { "width": "15%" },
-                        ],
-            'searching'   : true,
-            'ordering'    : true,
-            'info'        : true,
-            'autoWidth'   : false,
-            "oLanguage": {
-                "oPaginate": 
-                {
-                    "sFirst": "&lt&lt",
-                    "sLast": "&gt&gt",
-                    "sNext": "&gt",
-                    "sPrevious": "&lt"
-                },
-                "sEmptyTable": "Nenhum registro encontrado",
-                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sInfoThousands": ".",
-                "sLengthMenu": "_MENU_ Resultados por página",
-                "sLoadingRecords": "Carregando...",
-                "sProcessing": "Processando...",
-                "sZeroRecords": "Nenhum registro encontrado",
-                "sSearch": "Pesquisar ",
-                
-            }
+        'paging'      : true,
+        'lengthChange': false,
+        "columns": [
+          { "width": "5%" },
+          { "width": "20%" },
+            null,
+            { "width": "15%" },
+            { "width": "15%" },
+            { "width": "15%" },
+                    ],
+        'searching'   : true,
+        'ordering'    : true,
+        'info'        : true,
+        'autoWidth'   : false,
+        "oLanguage": {
+            "oPaginate": 
+            {
+                "sFirst": "&lt&lt",
+                "sLast": "&gt&gt",
+                "sNext": "&gt",
+                "sPrevious": "&lt"
+            },
+            "sEmptyTable": "Nenhum registro encontrado",
+            "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+            "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sInfoThousands": ".",
+            "sLengthMenu": "_MENU_ Resultados por página",
+            "sLoadingRecords": "Carregando...",
+            "sProcessing": "Processando...",
+            "sZeroRecords": "Nenhum registro encontrado",
+            "sSearch": "Pesquisar ",
+            
+        }
+    });
+    
+    function deleteElement (id, name, button) {
+        item_id = id;
+        item_name = name;
+        Swal.fire({
+          title: "Atenção!",
+          text: "Você tem certeza que deseja deletar o produto: " + name,
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          cancelmButtonText: "Não",
+          confirmButtonText: "Sim, quero deletar!"
+        }).then(result => {
+          if (result.value) {
+            submitDeleteItem(id, name, button);
+          }
         });
+    }
+    function submitDeleteItem(id, name, button) {
+      var token = "{{ csrfToken }}";
+      $.ajax({
+        type: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        url: "{{route('products.index')}}/"+ id + "?_method=DELETE",
+        data: JSON.stringify({
+          _csrf: token,
+        }),
+        success: function(obj) {
+        $("#tableProducts").DataTable()
+        .row(button.parentElement.parentElement)
+        .remove()
+        .draw(false);
+          Swal.fire("Deletado!", 'O produto '+ name + ' foi deletado', "success");
+        }
+      });
+    }
     </script>
 @endsection

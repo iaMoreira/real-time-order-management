@@ -40,7 +40,7 @@ function subscribeToChannel () {
        items += `<li><a href="#">${item.product.name} <span class="pull-right badge bg-blue">${item.amount}</span></a></li>`             
       } 
       listProduction.append(`
-        <div class="col-sm-4 col-md-4 col-lg-3 col-xl-2" style="min-height: 200px; height: 200px">
+        <div class="col-sm-4 col-md-4 col-lg-3 col-xl-2" style="min-height: 250px; height: 250px">
           <div class="box box-widget widget-user">
             <div class="widget-user-header bg-aqua" style="padding: 1px 20px;">
               <h3 class=""> <i class="fa fa-shopping-cart"></i> <b>Nº ${order.id}</b></h3>

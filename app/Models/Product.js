@@ -11,6 +11,12 @@ class Product extends Model {
   orders() {
     return this.manyThrough("App/Models/Order", "items");
   }
+  localCurrencyPrice() {
+    return this.price.toLocaleString("pt-BR", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
 }
 
 module.exports = Product;
