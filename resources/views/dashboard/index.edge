@@ -5,10 +5,10 @@
   <section class="content">
     <div class="nav-tabs-custom">
       <ul class="nav nav-tabs">
-        <li id="production" class="active"><a href="#tab_production" data-toggle="tab" aria-expanded="true">Em Produção <span id="qtd_production" data-toggle="tooltip" class="badge bg-blue" >3</span></a></li>
-        <li id="delivery" class=""><a href="#tab_delivery" data-toggle="tab" aria-expanded="false">Saiu para entrega <span id="qtd_delivery" data-toggle="tooltip" class="badge bg-yellow" >3</span></a></li>
-        <li id="delivered" class=""><a href="#tab_delivered" data-toggle="tab" aria-expanded="false">Entregues <span id="qtd_delivered" data-toggle="tooltip" class="badge bg-green" >3</span></a></li>
-        <li id="canceled" class=""><a href="#tab_canceled" data-toggle="tab" aria-expanded="false">Cancelados <span id="qtd_canceled" data-toggle="tooltip" class="badge bg-red" >3</span></a></li>
+        <li id="production" class="active"><a href="#tab_production" data-toggle="tab" aria-expanded="true">Em Produção <span id="qtd_production" data-toggle="tooltip" class="badge bg-blue" >0</span></a></li>
+        <li id="delivery" class=""><a href="#tab_delivery" data-toggle="tab" aria-expanded="false">Saiu para entrega <span id="qtd_delivery" data-toggle="tooltip" class="badge bg-yellow" >0</span></a></li>
+        <li id="delivered" class=""><a href="#tab_delivered" data-toggle="tab" aria-expanded="false">Entregues <span id="qtd_delivered" data-toggle="tooltip" class="badge bg-green" >0</span></a></li>
+        <li id="canceledm" class=""><a href="#tab_canceled" data-toggle="tab" aria-expanded="false">Cancelados <span id="qtd_canceled" data-toggle="tooltip" class="badge bg-red" >0</span></a></li>
       </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab_production">
@@ -24,7 +24,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                            
+
                         </tbody>
                     </table>
                 </div>
@@ -45,7 +45,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                           
+
                         </tbody>
                     </table>
                 </div>
@@ -67,7 +67,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                         </tbody>
                     </table>
                   </div>
@@ -103,7 +103,7 @@
 
     @include('dashboard.modal.productionModal')
     @include('dashboard.modal.deliveryModal')
-    
+
 @endsection
 
 @section('js')

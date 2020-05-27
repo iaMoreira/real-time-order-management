@@ -16,4 +16,5 @@
 const Ws = use('Ws')
 
 Ws.channel('order', 'OrderController')
+Ws.channel('cashier', 'CashierController')
 

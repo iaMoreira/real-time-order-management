@@ -1,0 +1,139 @@
+@layout('layouts/app')
+@!section('header')
+
+@section('content')
+<section class="content">
+  <div class="row">
+
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header ui-sortable-handle" style="">
+
+          <h1 class="box-title">Caixa {{cashier ? cashier.id : ' Fechado' }} </h1>
+
+          <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="fa fa-dollar"></i></span>
+
+                <div class="info-box-content">
+                  <span class="info-box-text">Total em caixa</span>
+                  <span class="info-box-number" id="total">{{localCurrency(cashier.total ||  0)}}</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+              <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-caret-square-o-up"></i></span>
+
+                <div class="info-box-content">
+                  <span class="info-box-text">Entradas</span>
+                  <span class="info-box-number" id="inputs">{{localCurrency(cashier.inputs || 0)}}</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+              <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+
+            <!-- fix for small devices only -->
+            <div class="clearfix visible-sm-block"></div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="fa fa-caret-square-o-down"></i></span>
+
+                <div class="info-box-content">
+                  <span class="info-box-text">Saídas</span>
+                  <span class="info-box-number" id="outputs">{{localCurrency(cashier.outputs || 0)}}</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+              <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="fa  fa-shopping-cart"></i></span>
+
+                <div class="info-box-content">
+                  <span class="info-box-text">Pedidos</span>
+                <span class="info-box-number" id="totalOrders">{{cashier.totalOrders}}</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+              <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <div>
+            @if(!cashier)
+              <a class="btn btn-success " href="{{route('cashier.open')}}">Abrir</a>
+            @else
+              <a class="btn btn-danger " href="{{route('cashier.close')}}">Fechar</a>
+            @endif
+
+            <button onclick="operation('Gerar Sangria no caixa', 'output')" class="btn btn-warning">Sangria</button>
+            <button onclick="operation('Gerar Entrada no caixa', 'input')" class="btn btn-primary">Entrada</button>
+          </div>
+          @if(successMessage)
+            <div class="alert alert-success mt-3 " role="alert">
+              {{successMessage}}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          @endif
+          @if(errorMessage)
+            <div class="alert alert-danger mt-3 alert-dismissible  show" role="alert">
+              {{errorMessage}}
+            </div>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          @endif
+          <!-- tools box -->
+
+          <!-- /. tools -->
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table id="table" class="table table-bordered table-hover dataTable">
+            <thead>
+              <tr>
+                <th> #</th>
+                <th>Valor</th>
+                <th>Status</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              @if(transactions)
+
+              @endif
+
+            </tbody>
+
+          </table>
+        </div>
+        <!-- /.box-body -->
+      </div>
+    </div>
+  </div>
+  <!-- /.col -->
+  <input type="hidden" name="_csrf" id="token" value="{{ csrfToken }}">
+
+</section>
+@endsection
+
+@section('js')
+  <script src="https://unpkg.com/adonis-websocket-client@1.0.2/dist/ws.js" charset="utf-8"></script>
+  {{ script('https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js') }}
+  {{ script('https://unpkg.com/@adonisjs/websocket-client@1.0.9/dist/Ws.browser.js') }}
+  {{ script('js/socketCashier.js') }}
+<script>
+</script>
+@endsection

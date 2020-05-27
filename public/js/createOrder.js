@@ -1,16 +1,16 @@
 $("#table_items").dataTable({
   "sPaginationType": "full_numbers",
   "bPaginate": false,
-  "bServerSide": false, 
+  "bServerSide": false,
   "bLengthChange": false,
   "bFilter": false,
   "bSort": false,
   "bInfo": false,
   "bAutoWidth": true,
-  
-  "oLanguage": 
+
+  "oLanguage":
   {
-      "oPaginate": 
+      "oPaginate":
       {
           "sFirst": "&lt&lt",
           "sLast": "&gt&gt",
@@ -30,31 +30,50 @@ let amountItem = $("#amount_item");
 let paymentTypeId = $('#payment_type_id');
 let discount = $('#discount');
 let client_id = $('#client_id');
-let name = $('#name');
+let nameProduct = $('#name');
 let phone = $('#phone');
 let address = $('#address');
 let number = $('#number');
 let complement = $('#complement');
 let observation = $('#observation');
+let total = $("#total");
 let id_itens = 0;
 let token = $('#token')
 
 function addItem(id, name, price) {
   let amount = amountItem.val();
+  let updated = false;
+  let sumTotal = 0.0;
+  tableItems.rows().every(function(index, element) {
+    var row = this.data();
+    if (id == row[0]) {
+      const qtd = Number(row[3]) + Number(amount);
+      const total = qtd * (Number(row[2].substr(3).replace('.', '').replace(',', '.')));
+      tableItems.cell({row:index, column:3}).data(qtd);
+      tableItems.cell({row:index, column:4}).data(localCurrency(total));
+      // tableItems.row(index).invalidate().render();
+      updated = true;
+    }
+    sumTotal += (Number(row[4].substr(3).replace('.', '').replace(',', '.')));
+  });
 
-  id_itens++;
-  tableItems.row
-    .add([
-      id,
-      name,
-      localCurrency(price),
-      amount,
-      localCurrency(price * amount),
-      `<div class="text-center"><a class="btn btn-danger" onclick="removeItem(this)" ><i class="fa fa-remove"></i></a></div>`
-    ])
-    .draw(false);
+  if(!updated) {
+    id_itens++;
+    tableItems.row
+      .add([
+        id,
+        name,
+        localCurrency(price),
+        amount,
+        localCurrency(price * amount),
+        `<div class="text-center"><a class="btn btn-danger" onclick="removeItem(this)" ><i class="fa fa-remove"></i></a></div>`
+      ])
+      .draw(false);
+      sumTotal += price;
+  }
 
   amountItem.val("1");
+  total.val(localCurrency(sumTotal));
 }
 function removeItem(row) {
   // var confir = confirm("Tem certeza que deseja excluir?");
@@ -88,21 +107,31 @@ function localCurrency(value) {
 
 function submit() {
   var form = new FormData();
-  
+  const amount = (Number(total.val().substr(3).replace('.', '').replace(',', '.')));
+
   let items = tableItems
     .rows()
     .data()
     .toArray()
     .map(function(item) {
-      return {product_id: item[0], amount: item[3]};
+      const qtd = Number(item[3]);
+      const value = (Number(item[2].substr(3).replace('.', '').replace(',', '.')));
+
+      return {
+        product_id: item[0],
+        product_name: item[1],
+        product_price:  value,
+        quantity: qtd,
+        amount: value * qtd
+      };
     });
   let data =  JSON.stringify({
-    _csrf: token.val(),
-    items: items,
+    items,
+    amount,
     payment_type_id: paymentTypeId.val(),
     discount: discount.val(),
     client_id: client_id.val(),
-    name: name.val(),
+    name: nameProduct.val(),
     phone: phone.val(),
     address: address.val(),
     number: number.val(),
@@ -121,6 +150,13 @@ function submit() {
     data: data,
     success: function(obj) {
       window.location.href = "/"
+    },
+    error: (data) => {
+      Swal.fire({
+        title: 'Algo inesperado!',
+        icon: 'error',
+        text: data.responseJSON.message
+      });
     }
   });
 }
@@ -131,15 +167,15 @@ async function getDataClient(){
     type: "GET",
     data: {phone: $("#phone").val()},
     url: '/client/phone',
-    success: function (client) {                
+    success: function (client) {
       if (client) {
         console.log(client)
         client_id.val(client.id)
-        name.val(client.name)
+        nameProduct.val(client.name)
         number.val(client.address.number)
         address.val(client.address.address)
         complement.val(client.address.complement)
-      } 
+      }
     }
   });
 }

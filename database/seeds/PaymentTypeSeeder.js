@@ -15,15 +15,15 @@ const Factory = use('Factory')
 const PaymentType = use('App/Models/PaymentType')
 class PaymentTypeSeeder {
   async run () {
-    const groups = await Group.createMany([
+    const types = await PaymentType.createMany([
       {
-        name: 'Dinheiro', 
+        name: 'Dinheiro',
       },
       {
-        name: 'Débito', 
+        name: 'Débito',
       },
       {
-        name: 'Crédito', 
+        name: 'Crédito',
       }
 
     ])

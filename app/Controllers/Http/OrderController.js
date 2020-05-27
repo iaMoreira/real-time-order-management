@@ -4,7 +4,8 @@ const Product = use("App/Models/Product");
 const Client = use("App/Models/Client");
 const Address = use("App/Models/Address");
 const Item = use("App/Models/Item");
-const Payment = use("App/Models/Payment");
+const Transaction = use("App/Models/Transaction");
+const Cashier = use("App/Models/Cashier");
 
 const Ws = use("Ws");
 const Route = use("Route");
@@ -38,10 +39,14 @@ class OrderController {
 
   async broadcastOrders() {
     let orders = await Order.getAll();
-    await Ws.getChannel("order")
-      .topic("order")
-      .socket.broadcastToAll("listOrders", orders);
+    const channel =  Ws.getChannel("order").topic("order");
+
+    if(channel){
+      channel.broadcastToAll("listOrders", orders);
+    }
   }
+
+
   async create({ request, response, view }) {
     let products = await Product.query()
       .with("group")
@@ -55,36 +60,51 @@ class OrderController {
     const body = request.post();
     let order = new Order();
     let client = await this.createOrGetClient(body);
-    let items = body['items'];
-    let payment = new Payment();
+
+    const openedCashier = await Cashier.openedCashier();
+    if(!openedCashier)
+      return response.status(401).json({error: true, message: "Não foi possível executar o pedido, pois o caixa está fechado!"});
 
     order.status = "production";
     order.client_id = client.id;
     order.observation = body["observation"];
+    order.cashier_id = openedCashier.id;
+    order.payment_type_id = body['payment_type_id']
+    order.amount = body['amount']
     let result = await order.save();
     await order.items().createMany(body['items'])
-    // items.map(function(item){});
-    payment.payment_type_id = body['payment_type_id']
-    payment.discount = body['discount']
-    await order.payment().save(payment);
 
-    if (order) {
-      await this.broadcastOrders();
+    if (!result) {
+      return response.status(401).json({error: true});
     }
-    response.json(order);
-    // response.route('DashboardController.index')
+    await this.broadcastOrders();
+    return response.json(order);
   }
+
   async update({ request, response, params }) {
-    let { status, motoboy_id } = request.except("_csrf");
-    const order = await Order.findOrFail(params.id);
+    const { status, motoboy_id } = request.except("_csrf");
+    let order = await Order.findOrFail(params.id);
+    const openedCashier = await Cashier.openedCashier();
+
+    let transaction = new Transaction();
+
     order.status = status;
     order.motoboy_id = motoboy_id;
+    order.cashier_id = openedCashier.id;
     const result = await order.save();
     await this.broadcastOrders();
-    if (result) {
+
+    if (status == 'delivered') {
+      transaction.payment_type_id = order.payment_type_id;
+      // transaction.discount = order.discount;
+      transaction.value = order.amount;
+      transaction.status = 'input';
+      transaction.cashier_id = openedCashier.id;
+      await order.transaction().save(transaction);
+      this.broadcastUpdateCashier();
+
     }
     return response.json(result);
-    // response.route('DashboardController.index')
   }
 
   async createOrGetClient(body){
@@ -111,10 +131,31 @@ class OrderController {
       }
       return client;
     }
-    
+
     return client;
-    
+
   }
+
+
+  async broadcastUpdateCashier() {
+    const channel = await Ws.getChannel("cashier").topic("cashier");
+    let cashier = await Cashier.openedCashier();
+    if(cashier){
+      let transactions = await cashier.transactions().fetch();
+      cashier.transactions = transactions.toJSON()
+      cashier.total = await cashier.sumTotal();
+      cashier.inputs = await cashier.sumInputs();
+      cashier.outputs = await cashier.sumOutputs();
+      cashier.sales = await cashier.sumSales();
+      cashier.totalOrders = await cashier.countOrders();
+    }
+
+    console.log(channel)
+    if(channel){
+      channel.broadcastToAll("currentCashier", cashier);
+    }
+  }
+
 }
 
 

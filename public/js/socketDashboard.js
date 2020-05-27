@@ -48,9 +48,9 @@ function subscribeToChannel () {
       tableProduction.row.add( [
         order.id,
         order.client.name,
-        'R$ ' + order.total.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+        localCurrency(order.amount),
         moment(new Date(order.created_at)).format('HH:mm:ss DD-MM-YYYY'),
-        `<div style="text-align: center;"> 
+        `<div style="text-align: center;">
             <a class="btn btn-primary" onclick="editProduction(${order.id}, '${order.client.name}')"><i class="fa fa-edit"></i></a>
             <a class="btn btn-danger" onclick="editCanceled(${order.id})" ><i class="fa fa-remove"></i></a>
         </div>`
@@ -60,10 +60,10 @@ function subscribeToChannel () {
       tableDelivery.row.add( [
         order.id,
         order.client.name,
-        'R$ ' + order.total.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+        localCurrency(order.amount),
         order.motoboy.name,
         moment(new Date(order.created_at)).format('HH:mm:ss DD-MM-YYYY'),
-        `<div style="text-align: center;"> 
+        `<div style="text-align: center;">
             <a class="btn btn-primary" onclick="editDelivery(${order.id}, '${order.motoboy.name}')"><i class="fa fa-edit"></i></a>
             <a class="btn btn-danger" onclick="editCanceled(${order.id})" ><i class="fa fa-remove"></i></a>
         </div>`
@@ -73,10 +73,10 @@ function subscribeToChannel () {
       tableDelivered.row.add( [
         order.id,
         order.client.name,
-        'R$ ' + order.total.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+        localCurrency(order.amount),
         order.motoboy.name,
         moment(new Date(order.created_at)).format('HH:mm:ss DD-MM-YYYY'),
-        `<div style="text-align: center;"> 
+        `<div style="text-align: center;">
             <a class="btn btn-danger" onclick="editCanceled(${order.id})" ><i class="fa fa-remove"></i></a>
         </div>`
       ] ).draw( false );
@@ -85,10 +85,20 @@ function subscribeToChannel () {
       tableCanceled.row.add( [
         order.id,
         order.client.name,
-        'R$ ' + order.total.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+        localCurrency(order.amount),
         (order.motoboy ? order.motoboy.name : "Sem motoboy" ),
         moment(new Date(order.created_at)).format('HH:mm:ss DD-MM-YYYY')
       ] ).draw( false );
     }
   });
+}
+
+function localCurrency(value) {
+  return (
+    "R$ " +
+    value.toLocaleString("pt-BR", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })
+  );
 }

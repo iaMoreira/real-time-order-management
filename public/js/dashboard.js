@@ -52,6 +52,7 @@ $("#table_delivery").DataTable({
   ],
   searching: true,
   ordering: true,
+  responsive: true,
   info: true,
   autoWidth: false,
   oLanguage: {

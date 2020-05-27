@@ -19,10 +19,10 @@ class GroupSeeder {
   async run () {
     const groups = await Group.createMany([
       {
-        name: 'Comidas', 
+        name: 'Comidas',
       },
       {
-        name: 'Bebidas', 
+        name: 'Bebidas',
       }
     ])
   }

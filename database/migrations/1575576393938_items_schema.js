@@ -9,7 +9,11 @@ class ItemsSchema extends Schema {
       table.increments()
       table.integer('order_id').notNullable().unsigned().references('id').inTable('orders')
       table.integer('product_id').notNullable().unsigned().references('id').inTable('products')
-      table.integer('amount').notNullable().unsigned()
+      table.decimal('discount', 8, 2);
+      table.string('product_name');
+      table.decimal('product_price', 8, 2);
+      table.integer('quantity');
+      table.decimal('amount', 8, 2).notNullable();
       table.timestamps()
     })
   }

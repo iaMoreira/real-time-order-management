@@ -9,7 +9,7 @@ class ProductsSchema extends Schema {
       table.increments()
       table.string('name').notNullable()
       table.string('description').nullable()
-      table.float('price').notNullable()
+      table.decimal('price', 8, 2).notNullable()
       table.integer('group_id').notNullable().unsigned().references('id').inTable('groups')
       table.timestamps()
     })
