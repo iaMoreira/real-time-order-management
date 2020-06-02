@@ -30,6 +30,35 @@ var table = $('#table').DataTable({
         }
     });
 
+var tableCashiers = $('#tableCashiers').DataTable({
+  'paging'      : true,
+  'lengthChange': false,
+  'searching'   : true,
+  'ordering'    : true,
+  'info'        : true,
+  'autoWidth'   : false,
+  "oLanguage": {
+      "oPaginate":
+      {
+          "sFirst": "&lt&lt",
+          "sLast": "&gt&gt",
+          "sNext": "&gt",
+          "sPrevious": "&lt"
+      },
+      "sEmptyTable": "Nenhum registro encontrado",
+      "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+      "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+      "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+      "sInfoPostFix": "",
+      "sInfoThousands": ".",
+      "sLengthMenu": "_MENU_ Resultados por página",
+      "sLoadingRecords": "Carregando...",
+      "sProcessing": "Processando...",
+      "sZeroRecords": "Nenhum registro encontrado",
+      "sSearch": "Pesquisar ",
+
+  }
+});
 $(function () {
   setupSocket()
 })
@@ -62,10 +91,10 @@ function subscribeToChannel () {
   chat.on('currentCashier', function(cashier){
     console.log(cashier)
 
-    $('#total').val(cashier.total);
-    $('#inputs').val(cashier.inputs);
-    $('#outputs').val(cashier.outputs);
-    $('#totalOrders').val(cashier.outputs);
+    $('#total').text(localCurrency(cashier.total));
+    $('#inputs').text(localCurrency(cashier.inputs));
+    $('#outputs').text(localCurrency(cashier.outputs));
+    $('#totalOrders').text(localCurrency(cashier.outputs));
 
     table.clear();
     for(transaction of cashier.transactions){
@@ -74,6 +103,19 @@ function subscribeToChannel () {
         localCurrency(transaction.value),
         transaction.status == 'input' ? 'Entrada' : 'Saída',
         transaction.created_at
+      ]).draw();
+    }
+
+    if(cashier.cashiers){
+      for(c of cashier.cashiers)
+      tableCashiers.row.add([
+        c.id,
+        c.created_at,
+        localCurrency(c.inputs),
+        localCurrency(c.outputs),
+        localCurrency(c.total),
+        // c.sales,
+        // c.totalOrders
       ]).draw();
     }
   });
@@ -133,3 +175,17 @@ function localCurrency(value) {
     })
   );
 }
+
+$("#production").click(() => {
+  $("#tab_production").addClass(["active", "show"]);
+  $("#tab_delivery").removeClass(["active", "show"]);
+  $("#tab_delivered").removeClass(["active", "show"]);
+  $("#tab_canceled").removeClass(["active", "show"]);
+});
+
+$("#delivery").click(() => {
+  $("#tab_production").removeClass(["active", "show"]);
+  $("#tab_delivery").addClass(["active", "show"]);
+  $("#tab_delivered").removeClass(["active", "show"]);
+  $("#tab_canceled").removeClass(["active", "show"]);
+});

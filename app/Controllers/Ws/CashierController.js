@@ -13,6 +13,8 @@ class CashierController {
 
   async onCurrentCashier() {
     let cashier = await Cashier.openedCashier();
+    cashier['cashiers'] = await Cashier.all();
+
     if(cashier){
       let transactions = await cashier.transactions().fetch();
       cashier.transactions = transactions.toJSON()
@@ -22,7 +24,7 @@ class CashierController {
       cashier.sales = await cashier.sumSales();
       cashier.totalOrders = await cashier.countOrders();
     }
-    // console.log(cashier);
+    console.log(cashier);
     // return cashier.toJSON();
     this.socket.emit('currentCashier', cashier);
 

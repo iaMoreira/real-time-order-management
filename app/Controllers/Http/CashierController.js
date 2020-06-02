@@ -55,6 +55,7 @@ class CashierController {
   async index({view}) {
     let cashier = await Cashier.openedCashier();
     var transactions;
+
     if(cashier){
       transactions = await cashier.transactions().fetch();
       transactions = transactions.toJSON()
@@ -102,8 +103,8 @@ class CashierController {
       cashier.totalOrders = await cashier.countOrders();
     }
 
-    console.log(channel)
     if(channel){
+      // console.log(cashier)
       channel.broadcastToAll("currentCashier", cashier);
     }
   }

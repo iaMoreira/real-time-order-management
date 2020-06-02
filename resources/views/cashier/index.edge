@@ -99,27 +99,49 @@
 
           <!-- /. tools -->
         </div>
-        <!-- /.box-header -->
         <div class="box-body">
-          <table id="table" class="table table-bordered table-hover dataTable">
-            <thead>
-              <tr>
-                <th> #</th>
-                <th>Valor</th>
-                <th>Status</th>
-                <th>Data</th>
-              </tr>
-            </thead>
-            <tbody>
-              @if(transactions)
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li id="production" class="active"><a href="#tab_production" data-toggle="tab" aria-expanded="true">Atual </a></li>
+              <li id="delivery" class=""><a href="#tab_delivery" data-toggle="tab" aria-expanded="false">Caixas </a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab_production">
+                <table id="table" class="table table-bordered table-hover dataTable">
+                  <thead>
+                    <tr>
+                      <th> #</th>
+                      <th>Valor</th>
+                      <th>Status</th>
+                      <th>Data</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
 
-              @endif
+                </table>
+              </div>
+              <div class="tab-pane" id="tab_delivery">
+                <table id="tableCashiers" class="table table-bordered table-hover dataTable">
+                  <thead>
+                    <tr>
+                      <th> #</th>
+                      <th>Data</th>
+                      <th>Entradas</th>
+                      <th>Saídas</th>
+                      <th>Total</th>
+                      {{--  <th>sales</th>  --}}
+                      {{--  <th>orders</th>  --}}
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
 
-            </tbody>
-
-          </table>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
-        <!-- /.box-body -->
       </div>
     </div>
   </div>
