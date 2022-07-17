@@ -12,21 +12,22 @@ class CashierController {
   }
 
   async onCurrentCashier() {
-    let cashier = await Cashier.openedCashier();
-    cashier['cashiers'] = await Cashier.all();
 
-    if(cashier){
-      let transactions = await cashier.transactions().fetch();
-      cashier.transactions = transactions.toJSON()
-      cashier.total = await cashier.sumTotal();
-      cashier.inputs = await cashier.sumInputs();
-      cashier.outputs = await cashier.sumOutputs();
-      cashier.sales = await cashier.sumSales();
-      cashier.totalOrders = await cashier.countOrders();
+    let cashierOpened = await Cashier.openedCashier();
+
+    let data = {};
+    data.cashiers = await Cashier.query().where('status', 'closed').fetch();
+
+    if(cashierOpened){
+      let transactions = await cashierOpened.transactions().fetch();
+      data.transactions = transactions.toJSON()
+      data.total = await cashierOpened.sumTotal();
+      data.inputs = await cashierOpened.sumInputs();
+      data.outputs = await cashierOpened.sumOutputs();
+      data.sales = await cashierOpened.sumSales();
+      data.totalOrders = await cashierOpened.countOrders();
     }
-    console.log(cashier);
-    // return cashier.toJSON();
-    this.socket.emit('currentCashier', cashier);
+    this.socket.emit('currentCashier', data);
 
   }
 }

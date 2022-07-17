@@ -91,26 +91,31 @@ function subscribeToChannel () {
   chat.on('currentCashier', function(cashier){
     console.log(cashier)
 
-    $('#total').text(localCurrency(cashier.total));
-    $('#inputs').text(localCurrency(cashier.inputs));
-    $('#outputs').text(localCurrency(cashier.outputs));
-    $('#totalOrders').text(localCurrency(cashier.outputs));
+    if (cashier.total != undefined) {
+      $('#total').text(localCurrency(cashier.total));
+      $('#inputs').text(localCurrency(cashier.inputs));
+      $('#outputs').text(localCurrency(cashier.outputs));
+      $('#totalOrders').text(localCurrency(cashier.outputs));
+    }
 
-    table.clear();
-    for(transaction of cashier.transactions){
-      table.row.add([
-        transaction.id,
-        localCurrency(transaction.value),
-        transaction.status == 'input' ? 'Entrada' : 'Saída',
-        transaction.created_at
-      ]).draw();
+    table.clear().draw();
+    if (cashier.transactions != undefined) {
+      for(transaction of cashier.transactions){
+        table.row.add([
+          transaction.id,
+          localCurrency(transaction.value),
+          transaction.status == 'input' ? 'Entrada' : 'Saída',
+          transaction.created_at
+        ]).draw();
+      }
     }
 
     if(cashier.cashiers){
       for(c of cashier.cashiers)
       tableCashiers.row.add([
         c.id,
-        c.created_at,
+        new Date(c.created_at).toLocaleString('pt-BR'),
+        new Date(c.updated_at).toLocaleString('pt-BR'),
         localCurrency(c.inputs),
         localCurrency(c.outputs),
         localCurrency(c.total),

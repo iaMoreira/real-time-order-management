@@ -40,7 +40,7 @@ class CashierController {
       openedCashier.total = await openedCashier.sumTotal();
       openedCashier.inputs = await openedCashier.sumInputs();
       openedCashier.outputs = await openedCashier.sumOutputs();
-      openedCashier.status = 'finished';
+      openedCashier.status = 'closed';
 
       await openedCashier.save()
       view.share({

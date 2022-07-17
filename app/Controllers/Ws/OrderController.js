@@ -12,6 +12,7 @@ class OrderController {
   async onListOrders(){
     
     let orders = await Order.getAll()
+    console.log(orders)
     this.socket.emit('listOrders', orders);
   }
 

@@ -61,7 +61,7 @@
 
                 <div class="info-box-content">
                   <span class="info-box-text">Pedidos</span>
-                <span class="info-box-number" id="totalOrders">{{cashier.totalOrders}}</span>
+                <span class="info-box-number" id="totalOrders">{{cashier.totalOrders || 0}}</span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -126,7 +126,8 @@
                   <thead>
                     <tr>
                       <th> #</th>
-                      <th>Data</th>
+                      <th>Data Abertura</th>
+                      <th>Data Fechamento</th>
                       <th>Entradas</th>
                       <th>Saídas</th>
                       <th>Total</th>

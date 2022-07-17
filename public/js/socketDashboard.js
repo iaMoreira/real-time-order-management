@@ -40,16 +40,16 @@ function subscribeToChannel () {
     $('#qtd_delivery').text(orders.delivery.length)
     $('#qtd_delivered').text(orders.delivered.length)
     $('#qtd_canceled').text(orders.canceled.length)
-    tableProduction.clear()
-    tableDelivery.clear()
-    tableDelivered.clear()
-    tableCanceled.clear()
+    tableProduction.clear().draw();
+    tableDelivery.clear().draw();
+    tableDelivered.clear().draw();
+    tableCanceled.clear().draw();
     for(order of orders.production){
       tableProduction.row.add( [
         order.id,
         order.client.name,
         localCurrency(order.amount),
-        moment(new Date(order.created_at)).format('HH:mm:ss DD-MM-YYYY'),
+        moment(new Date(order.created_at)).format('HH:mm:ss DD/MM/YYYY'),
         `<div style="text-align: center;">
             <a class="btn btn-primary" onclick="editProduction(${order.id}, '${order.client.name}')"><i class="fa fa-edit"></i></a>
             <a class="btn btn-danger" onclick="editCanceled(${order.id})" ><i class="fa fa-remove"></i></a>
@@ -62,7 +62,7 @@ function subscribeToChannel () {
         order.client.name,
         localCurrency(order.amount),
         order.motoboy.name,
-        moment(new Date(order.created_at)).format('HH:mm:ss DD-MM-YYYY'),
+        moment(new Date(order.created_at)).format('HH:mm:ss DD/MM/YYYY'),
         `<div style="text-align: center;">
             <a class="btn btn-primary" onclick="editDelivery(${order.id}, '${order.motoboy.name}')"><i class="fa fa-edit"></i></a>
             <a class="btn btn-danger" onclick="editCanceled(${order.id})" ><i class="fa fa-remove"></i></a>
@@ -75,7 +75,7 @@ function subscribeToChannel () {
         order.client.name,
         localCurrency(order.amount),
         order.motoboy.name,
-        moment(new Date(order.created_at)).format('HH:mm:ss DD-MM-YYYY'),
+        moment(new Date(order.created_at)).format('HH:mm:ss DD/MM/YYYY'),
         `<div style="text-align: center;">
             <a class="btn btn-danger" onclick="editCanceled(${order.id})" ><i class="fa fa-remove"></i></a>
         </div>`
@@ -87,7 +87,7 @@ function subscribeToChannel () {
         order.client.name,
         localCurrency(order.amount),
         (order.motoboy ? order.motoboy.name : "Sem motoboy" ),
-        moment(new Date(order.created_at)).format('HH:mm:ss DD-MM-YYYY')
+        moment(new Date(order.created_at)).format('HH:mm:ss DD/MM/YYYY')
       ] ).draw( false );
     }
   });
