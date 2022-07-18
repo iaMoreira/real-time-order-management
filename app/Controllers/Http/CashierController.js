@@ -83,6 +83,7 @@ class CashierController {
     ];
 
     view.share({
+      title: 'Caixa ' + (cashier ? cashier.id : ' Fechado'),
       breadcrumb,
       cashier,
       transactions: transactions

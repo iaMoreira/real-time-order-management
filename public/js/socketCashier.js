@@ -95,7 +95,7 @@ function subscribeToChannel () {
       $('#total').text(localCurrency(cashier.total));
       $('#inputs').text(localCurrency(cashier.inputs));
       $('#outputs').text(localCurrency(cashier.outputs));
-      $('#totalOrders').text(localCurrency(cashier.outputs));
+      $('#totalOrders').text(cashier.outputs);
     }
 
     table.clear().draw();
